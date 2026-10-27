@@ -1,0 +1,27 @@
+@layer theme, base, components, utilities;
+/* Every standard token stays available for future remote releases. */
+@import 'tailwindcss/theme.css' layer(theme) theme(static);
+@import 'tailwindcss/preflight.css' layer(base);
+@import './theme.css';
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  html { color-scheme: light; -webkit-tap-highlight-color: transparent; }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: 'ss01';
+    letter-spacing: -0.01em;
+  }
+  button:not(:disabled), [role='button']:not(:disabled) { cursor: pointer; }
+
+  /* Browser surfaces carry the palette too. */
+  ::selection { background: color-mix(in srgb, var(--primary) 22%, transparent); }
+  input, textarea { caret-color: var(--primary); }
+  :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+  a { text-underline-offset: 0.2em; }
+  * { scrollbar-color: color-mix(in srgb, var(--foreground) 25%, transparent) transparent; scrollbar-width: thin; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  }
+}

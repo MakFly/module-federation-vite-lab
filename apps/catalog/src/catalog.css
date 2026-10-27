@@ -1,0 +1,9 @@
+@layer theme, base, components, utilities;
+@import 'tw-animate-css';
+@import 'tailwindcss/utilities.css' layer(utilities) source(none);
+@reference 'tailwindcss/theme.css';
+@reference '@acme/ui/styles/theme.css';
+@source './';
+@source '../../../packages/ui/src/components';
+
+/* No preflight, no :root: the hosting application owns those globals. */

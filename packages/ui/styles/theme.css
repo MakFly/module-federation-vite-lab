@@ -1,0 +1,69 @@
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Calque store: an Apple-style storefront (pinned by the brief).
+ * White and light-grey grounds alternating with black tiles, near-black ink,
+ * one action blue for pills and links. Geist carries every text role.
+ * Light only: people shop this in daylight, and the black tiles give the page its contrast.
+ */
+@theme inline {
+  --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-signal: var(--signal);
+  --color-link: var(--link);
+  --color-tile-dark: var(--tile-dark);
+  --color-tile-dark-foreground: var(--tile-dark-foreground);
+  --color-tile-dark-muted: var(--tile-dark-muted);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --shadow-card: 0 4px 18px -4px rgb(0 0 0 / 0.12);
+  --shadow-flyout: 0 18px 50px -12px rgb(0 0 0 / 0.28);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  --radius: 0.75rem;
+  --background: #ffffff;
+  --foreground: #1d1d1f;
+  --card: #ffffff;
+  --card-foreground: var(--foreground);
+  --popover: #ffffff;
+  --popover-foreground: var(--foreground);
+  --primary: #0071e3;             /* action blue: pills, focus */
+  --primary-foreground: #ffffff;
+  --secondary: #e8e8ed;
+  --secondary-foreground: var(--foreground);
+  --muted: #f5f5f7;               /* grey tiles and footer */
+  --muted-foreground: #6e6e73;
+  --accent: #f5f5f7;
+  --accent-foreground: var(--foreground);
+  --destructive: #d70015;
+  --signal: #b64400;              /* "Nouveau" and low stock, 5.6:1 on white */
+  --link: #0066cc;
+  --tile-dark: #000000;
+  --tile-dark-foreground: #f5f5f7;
+  --tile-dark-muted: #a1a1a6;
+  --border: #d2d2d7;
+  --input: #d2d2d7;
+  --ring: #0071e3;
+}

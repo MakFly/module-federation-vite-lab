@@ -1,0 +1,4 @@
+@import '@acme/ui/styles/globals.css';
+@import 'tailwindcss/utilities.css' layer(utilities) source(none);
+@source './main.tsx';
+@source '../../../packages/ui/src/components';

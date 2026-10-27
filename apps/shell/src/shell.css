@@ -1,0 +1,5 @@
+@import '@acme/ui/styles/globals.css';
+@import 'tw-animate-css';
+@import 'tailwindcss/utilities.css' layer(utilities) source(none);
+@source './';
+@source '../../../packages/ui/src/components';

@@ -1,0 +1,546 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-27T19:58:57Z",
+  "title": "Design System: Calque",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Bleu d'action",
+        "canonical": "oklch(56.3% 0.193 256.2)",
+        "tonalRamp": [
+          "#000a20",
+          "#01234f",
+          "#013f84",
+          "#005ebe",
+          "#1d7ff2",
+          "#65a7fe",
+          "#a7ccfe",
+          "#e5f0fe"
+        ]
+      },
+      "primary-foreground": {
+        "role": "neutral",
+        "displayName": "Blanc sur action",
+        "canonical": "oklch(100.0% 0.000 0)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "link": {
+        "role": "primary",
+        "displayName": "Bleu lien",
+        "canonical": "oklch(52.2% 0.177 255.8)",
+        "tonalRamp": [
+          "#000a20",
+          "#00244f",
+          "#014083",
+          "#005ebd",
+          "#2b81e9",
+          "#64a7fe",
+          "#a7ccfe",
+          "#e5f0fe"
+        ]
+      },
+      "link-on-dark": {
+        "role": "primary",
+        "displayName": "Bleu lien sur noir",
+        "canonical": "oklch(66.9% 0.181 251.8)",
+        "tonalRamp": [
+          "#000b1d",
+          "#00254a",
+          "#00427b",
+          "#0062b1",
+          "#0083ea",
+          "#58a9ff",
+          "#a2cdfe",
+          "#e4f0fe"
+        ]
+      },
+      "signal": {
+        "role": "secondary",
+        "displayName": "Orange signal",
+        "canonical": "oklch(53.7% 0.161 42.4)",
+        "tonalRamp": [
+          "#1a0400",
+          "#431400",
+          "#702701",
+          "#a23c02",
+          "#ce5a25",
+          "#f67e4c",
+          "#feb598",
+          "#feeae2"
+        ]
+      },
+      "signal-on-dark": {
+        "role": "secondary",
+        "displayName": "Orange signal sur noir",
+        "canonical": "oklch(78.5% 0.154 60.7)",
+        "tonalRamp": [
+          "#150700",
+          "#391d01",
+          "#633500",
+          "#8f4f02",
+          "#bd6b05",
+          "#e98b29",
+          "#ffb87c",
+          "#feeadb"
+        ]
+      },
+      "destructive": {
+        "role": "error",
+        "displayName": "Rouge erreur",
+        "canonical": "oklch(55.3% 0.225 27.3)",
+        "tonalRamp": [
+          "#1f0000",
+          "#4d0003",
+          "#800109",
+          "#b80412",
+          "#eb2a2a",
+          "#fe7467",
+          "#feb3aa",
+          "#fee9e6"
+        ]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Encre",
+        "canonical": "oklch(23.2% 0.004 286.1)",
+        "tonalRamp": [
+          "#0b0b0d",
+          "#252527",
+          "#424244",
+          "#616163",
+          "#828284",
+          "#a5a5a7",
+          "#c9c9cb",
+          "#eeeef1"
+        ]
+      },
+      "muted-foreground": {
+        "role": "neutral",
+        "displayName": "Gris secondaire",
+        "canonical": "oklch(54.0% 0.008 286.1)",
+        "tonalRamp": [
+          "#0b0b0e",
+          "#252529",
+          "#414146",
+          "#616165",
+          "#828287",
+          "#a4a4aa",
+          "#c8c8ce",
+          "#eeeef4"
+        ]
+      },
+      "background": {
+        "role": "neutral",
+        "displayName": "Papier",
+        "canonical": "oklch(100.0% 0.000 0)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Brume",
+        "canonical": "oklch(97.1% 0.003 286.4)",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#252526",
+          "#424243",
+          "#616163",
+          "#828284",
+          "#a5a5a7",
+          "#c9c9cb",
+          "#eeeef0"
+        ]
+      },
+      "secondary": {
+        "role": "neutral",
+        "displayName": "Galet",
+        "canonical": "oklch(93.2% 0.007 286.3)",
+        "tonalRamp": [
+          "#0b0b0e",
+          "#252528",
+          "#414145",
+          "#616165",
+          "#828286",
+          "#a4a4a9",
+          "#c8c8cd",
+          "#eeeef3"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Filet",
+        "canonical": "oklch(86.5% 0.007 286.3)",
+        "tonalRamp": [
+          "#0b0b0e",
+          "#252528",
+          "#414146",
+          "#616165",
+          "#828286",
+          "#a4a4a9",
+          "#c8c8cd",
+          "#eeeef3"
+        ]
+      },
+      "nav-glass": {
+        "role": "neutral",
+        "displayName": "Verre de nav",
+        "canonical": "rgb(250 250 252 / 0.8)",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#252526",
+          "#424243",
+          "#616163",
+          "#828284",
+          "#a5a5a7",
+          "#c9c9cb",
+          "#eeeef0"
+        ]
+      },
+      "tile-dark": {
+        "role": "neutral",
+        "displayName": "Nuit",
+        "canonical": "oklch(0.0% 0.000 0)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "tile-dark-foreground": {
+        "role": "neutral",
+        "displayName": "Encre de nuit",
+        "canonical": "oklch(97.1% 0.003 286.4)",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#252526",
+          "#424243",
+          "#616163",
+          "#828284",
+          "#a5a5a7",
+          "#c9c9cb",
+          "#eeeef0"
+        ]
+      },
+      "tile-dark-muted": {
+        "role": "neutral",
+        "displayName": "Gris de nuit",
+        "canonical": "oklch(71.1% 0.007 286.2)",
+        "tonalRamp": [
+          "#0b0b0e",
+          "#252528",
+          "#414146",
+          "#616165",
+          "#828287",
+          "#a4a4a9",
+          "#c8c8ce",
+          "#eeeef3"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Nom du produit dans une tuile pleine (h1 de l'accueil)."
+      },
+      "display-page": {
+        "displayName": "Display de page",
+        "purpose": "Nom de catégorie en tête de page catégorie ; la fiche produit en utilise une variante plus petite."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Titres de section : « La boutique. », « … en trois points. »"
+      },
+      "headline-tile": {
+        "displayName": "Headline de tuile",
+        "purpose": "Nom du produit dans une demi-tuile."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Titre de l’étagère, du sac, prix de la fiche, champ de recherche."
+      },
+      "title-card": {
+        "displayName": "Title de carte",
+        "purpose": "Nom du produit dans une carte et dans la sous-navigation."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Accroche sous le nom dans une tuile pleine, 38ch au plus."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Description longue de la fiche produit, 52ch au plus."
+      },
+      "ui": {
+        "displayName": "UI",
+        "purpose": "Texte des pilules et des lignes du sac."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Accroches de carte, prix, états de stock."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Liens de la barre globale, nom de finition, pied de page."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card",
+        "value": "0 4px 18px -4px rgb(0 0 0 / 0.12)",
+        "purpose": "Cartes d'étagère blanches posées sur la brume, au repos (--shadow-card)."
+      },
+      {
+        "name": "flyout",
+        "value": "0 18px 50px -12px rgb(0 0 0 / 0.28)",
+        "purpose": "Couches qui flottent : sac, panneau de recherche, bouton du lab, carte au survol (--shadow-flyout)."
+      },
+      {
+        "name": "pill-outline",
+        "value": "inset 0 0 0 1px currentColor",
+        "purpose": "Contour de la pilule secondaire, à la couleur de son texte."
+      },
+      {
+        "name": "swatch-selected",
+        "value": "0 0 0 1.5px #1d1d1f",
+        "purpose": "Anneau de la pastille de finition choisie (#f5f5f7 sur noir)."
+      },
+      {
+        "name": "swatch-inner",
+        "value": "inset 0 0 0 1px rgb(0 0 0 / 0.12), inset 0 -6px 10px rgb(0 0 0 / 0.12)",
+        "purpose": "Filet et léger creux à l’intérieur de chaque pastille."
+      },
+      {
+        "name": "device-ground",
+        "value": "ellipse rgb(0 0 0 / 0.22), feGaussianBlur stdDeviation 10",
+        "purpose": "Ombre portée au sol sous chaque dessin d’appareil (SVG)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Courbe de la maison : recoloration des appareils, échelle des dessins au survol."
+      },
+      {
+        "name": "finish-glide",
+        "value": "450ms",
+        "purpose": "Transition fill / stop-color quand une finition change."
+      },
+      {
+        "name": "layer-enter",
+        "value": "300ms",
+        "purpose": "Entrée du panneau de recherche (glisse depuis le haut), du sac, des lignes du sac."
+      },
+      {
+        "name": "card-lift",
+        "value": "300ms shadow, 500ms art scale(1.03)",
+        "purpose": "Survol d'une carte d'étagère."
+      },
+      {
+        "name": "swatch-ring",
+        "value": "200ms",
+        "purpose": "Apparition de l'anneau de sélection."
+      },
+      {
+        "name": "menu-stagger",
+        "value": "300ms, delay 60ms + 30ms per item",
+        "purpose": "Entrée des catégories du menu mobile."
+      },
+      {
+        "name": "search-debounce",
+        "value": "200ms",
+        "purpose": "Anti-rebond avant de lancer la recherche."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "transition/animation-duration: 0.01ms",
+        "purpose": "prefers-reduced-motion: reduce neutralise tout ; les entrées sont sous motion-safe."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Pilule primaire",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Le seul bouton à emphase pleine : « Ajouter au sac », « Réessayer ».",
+      "html": "<button type=\"button\" class=\"ds-btn-primary\">Ajouter au sac</button>",
+      "css": ".ds-btn-primary { font-family: var(--font-sans, 'Geist', ui-sans-serif, system-ui, sans-serif); height: 40px; padding: 0 20px; border: 0; border-radius: 9999px; background: var(--primary, #0071e3); color: var(--primary-foreground, #fff); font-size: 15px; font-weight: 500; letter-spacing: -0.01em; cursor: pointer; transition: background-color 150ms; } .ds-btn-primary:hover { background: color-mix(in srgb, var(--primary, #0071e3) 92%, #000); } .ds-btn-primary:focus-visible { outline: 2px solid var(--ring, #0071e3); outline-offset: 2px; } .ds-btn-primary:disabled { opacity: 0.4; cursor: default; }"
+    },
+    {
+      "name": "Pilule secondaire",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Pilule au contour interne, « En savoir plus » ; se remplit au survol. Variante sur noir en link-on-dark.",
+      "html": "<div class=\"ds-pill-row\"><a href=\"#\" class=\"ds-btn-secondary\">En savoir plus</a><span class=\"ds-on-dark\"><a href=\"#\" class=\"ds-btn-secondary ds-btn-secondary--dark\">En savoir plus</a></span></div>",
+      "css": ".ds-pill-row { display: flex; gap: 14px; align-items: center; } .ds-on-dark { display: inline-flex; padding: 16px; background: var(--tile-dark, #000); border-radius: 12px; } .ds-btn-secondary { font-family: var(--font-sans, 'Geist', ui-sans-serif, system-ui, sans-serif); display: inline-flex; align-items: center; height: 40px; padding: 0 20px; border-radius: 9999px; color: var(--primary, #0071e3); box-shadow: inset 0 0 0 1px currentColor; font-size: 15px; font-weight: 500; text-decoration: none; transition: background-color 150ms, color 150ms; } .ds-btn-secondary:hover { background: var(--primary, #0071e3); color: var(--primary-foreground, #fff); } .ds-btn-secondary--dark { color: #2997ff; } .ds-btn-secondary--dark:hover { background: #2997ff; color: #000; } .ds-btn-secondary:focus-visible { outline: 2px solid var(--ring, #0071e3); outline-offset: 2px; }"
+    },
+    {
+      "name": "Pastilles de finition",
+      "kind": "chip",
+      "refersTo": "finish-swatch",
+      "description": "Groupe radio de finitions ; la pastille choisie porte un anneau à 3px, le nom s’affiche dessous.",
+      "html": "<div class=\"ds-finish\"><div class=\"ds-finish-group\" role=\"radiogroup\" aria-label=\"Finition\"><button type=\"button\" role=\"radio\" aria-checked=\"true\" aria-label=\"Graphite\" class=\"ds-swatch is-selected\"><span style=\"background:#3b3d43\"></span></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"Sable\" class=\"ds-swatch\"><span style=\"background:#d8c7a8\"></span></button><button type=\"button\" role=\"radio\" aria-checked=\"false\" aria-label=\"Glacier\" class=\"ds-swatch\"><span style=\"background:#b7c4d3\"></span></button></div><p class=\"ds-finish-name\">Graphite</p></div>",
+      "css": ".ds-finish { font-family: var(--font-sans, 'Geist', ui-sans-serif, system-ui, sans-serif); display: flex; flex-direction: column; align-items: center; gap: 10px; } .ds-finish-group { display: flex; gap: 12px; } .ds-swatch { width: 28px; height: 28px; padding: 3px; border: 0; background: none; border-radius: 9999px; box-shadow: 0 0 0 1px transparent; cursor: pointer; transition: box-shadow 200ms; } .ds-swatch span { display: block; width: 100%; height: 100%; border-radius: 9999px; box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.12), inset 0 -6px 10px rgb(0 0 0 / 0.12); } .ds-swatch.is-selected { box-shadow: 0 0 0 1.5px var(--foreground, #1d1d1f); } .ds-swatch:focus-visible { outline: 2px solid var(--ring, #0071e3); outline-offset: 2px; } .ds-finish-name { margin: 0; font-size: 12px; color: var(--muted-foreground, #6e6e73); }"
+    },
+    {
+      "name": "Carte d'étagère",
+      "kind": "card",
+      "refersTo": "product-card",
+      "description": "Carte blanche sur brume, entièrement cliquable ; ombre carte au repos, ombre flottante au survol.",
+      "html": "<div class=\"ds-card-ground\"><a href=\"#\" class=\"ds-card\"><span class=\"ds-card-new\">Nouveau</span><span class=\"ds-card-stage\"><svg viewBox=\"0 0 640 400\" width=\"160\" aria-hidden=\"true\"><ellipse cx=\"320\" cy=\"372\" rx=\"270\" ry=\"16\" fill=\"rgb(0 0 0 / 0.18)\"/><rect x=\"96\" y=\"14\" width=\"448\" height=\"300\" rx=\"18\" fill=\"#101114\"/><rect x=\"110\" y=\"28\" width=\"420\" height=\"272\" rx=\"6\" fill=\"#1b2230\"/><path d=\"M44 316 H596 L584 336 Q581 342 573 342 H67 Q59 342 56 336 Z\" fill=\"#4a4c52\"/><rect x=\"286\" y=\"316\" width=\"68\" height=\"6\" rx=\"3\" fill=\"#2a2c31\"/></svg></span><span class=\"ds-card-dots\"><i style=\"background:#3b3d43\"></i><i style=\"background:#d8c7a8\"></i><i style=\"background:#b7c4d3\"></i></span><span class=\"ds-card-title\">Ardoise 14</span><span class=\"ds-card-tagline\">Fin, silencieux, dix-huit heures loin d'une prise.</span><span class=\"ds-card-price\">1 499,00 €</span></a></div>",
+      "css": ".ds-card-ground { padding: 24px; background: var(--muted, #f5f5f7); } .ds-card { font-family: var(--font-sans, 'Geist', ui-sans-serif, system-ui, sans-serif); position: relative; display: flex; flex-direction: column; width: 260px; padding: 24px; border-radius: 18px; background: var(--card, #fff); color: var(--foreground, #1d1d1f); text-decoration: none; box-shadow: 0 4px 18px -4px rgb(0 0 0 / 0.12); transition: box-shadow 300ms; } .ds-card:hover { box-shadow: 0 18px 50px -12px rgb(0 0 0 / 0.28); } .ds-card:focus-visible { outline: 2px solid var(--ring, #0071e3); outline-offset: 4px; } .ds-card-new { position: absolute; top: 20px; right: 24px; font-size: 12px; font-weight: 500; color: var(--signal, #b64400); } .ds-card-stage { display: flex; height: 140px; align-items: center; justify-content: center; } .ds-card-stage svg { transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-card:hover .ds-card-stage svg { transform: scale(1.03); } .ds-card-dots { display: flex; gap: 6px; margin-top: 16px; } .ds-card-dots i { width: 10px; height: 10px; border-radius: 9999px; box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.15); } .ds-card-title { margin-top: 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; } .ds-card-tagline { margin-top: 4px; font-size: 14px; line-height: 1.375; color: var(--muted-foreground, #6e6e73); } .ds-card-price { padding-top: 20px; font-size: 14px; }"
+    },
+    {
+      "name": "Tuile héroïque",
+      "kind": "custom",
+      "refersTo": "hero-tile-dark",
+      "description": "Signature : un produit à l'échelle héroïque, achetable sur place, l'appareil posé sur le bord bas. Ici en ton nuit.",
+      "html": "<section class=\"ds-hero\"><h2 class=\"ds-hero-title\">Galet</h2><p class=\"ds-hero-lead\">Le téléphone qui tient dans la main.</p><p class=\"ds-hero-price\">899,00 € <span>Nouveau</span></p><div class=\"ds-hero-actions\"><button type=\"button\" class=\"ds-hero-buy\">Ajouter au sac</button><a href=\"#\" class=\"ds-hero-more\">En savoir plus</a></div><div class=\"ds-hero-art\"><svg viewBox=\"0 0 640 400\" width=\"320\" aria-hidden=\"true\"><ellipse cx=\"320\" cy=\"372\" rx=\"270\" ry=\"16\" fill=\"rgb(0 0 0 / 0.18)\"/><rect x=\"96\" y=\"14\" width=\"448\" height=\"300\" rx=\"18\" fill=\"#101114\"/><rect x=\"110\" y=\"28\" width=\"420\" height=\"272\" rx=\"6\" fill=\"#1b2230\"/><path d=\"M44 316 H596 L584 336 Q581 342 573 342 H67 Q59 342 56 336 Z\" fill=\"#5b5e66\"/><rect x=\"286\" y=\"316\" width=\"68\" height=\"6\" rx=\"3\" fill=\"#2a2c31\"/></svg></div></section>",
+      "css": ".ds-hero { font-family: var(--font-sans, 'Geist', ui-sans-serif, system-ui, sans-serif); display: flex; flex-direction: column; align-items: center; padding: 48px 20px 0; text-align: center; background: var(--tile-dark, #000); color: var(--tile-dark-foreground, #f5f5f7); overflow: hidden; } .ds-hero-title { margin: 0; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 600; line-height: 1.05; letter-spacing: -0.03em; } .ds-hero-lead { margin: 8px 0 0; max-width: 38ch; font-size: clamp(1.125rem, 2.2vw, 1.75rem); line-height: 1.375; opacity: 0.9; } .ds-hero-price { margin: 12px 0 0; font-size: 15px; color: var(--tile-dark-muted, #a1a1a6); } .ds-hero-price span { margin-left: 8px; color: #ff9f43; } .ds-hero-actions { display: flex; gap: 14px; margin-top: 20px; } .ds-hero-buy { height: 40px; padding: 0 20px; border: 0; border-radius: 9999px; background: var(--primary, #0071e3); color: #fff; font: inherit; font-size: 15px; font-weight: 500; cursor: pointer; } .ds-hero-buy:focus-visible, .ds-hero-more:focus-visible { outline: 2px solid var(--ring, #0071e3); outline-offset: 2px; } .ds-hero-more { display: inline-flex; align-items: center; height: 40px; padding: 0 20px; border-radius: 9999px; color: #2997ff; box-shadow: inset 0 0 0 1px currentColor; font-size: 15px; font-weight: 500; text-decoration: none; transition: background-color 150ms, color 150ms; } .ds-hero-more:hover { background: #2997ff; color: #000; } .ds-hero-art { margin-top: 24px; }"
+    },
+    {
+      "name": "Barre globale",
+      "kind": "nav",
+      "refersTo": "global-nav",
+      "description": "Barre translucide de 44px : marque, catégories au centre, recherche et sac en cibles de 44px.",
+      "html": "<header class=\"ds-nav\"><nav class=\"ds-nav-inner\" aria-label=\"Navigation principale\"><a href=\"#\" class=\"ds-nav-icon\" aria-label=\"Calque, accueil\"><svg viewBox=\"0 0 20 20\" width=\"18\" height=\"18\" aria-hidden=\"true\"><rect x=\"1\" y=\"1\" width=\"12\" height=\"12\" rx=\"3.5\" fill=\"currentColor\"/><rect x=\"7\" y=\"7\" width=\"12\" height=\"12\" rx=\"3.5\" fill=\"currentColor\" fill-opacity=\"0.35\" stroke=\"currentColor\" stroke-width=\"1.2\"/></svg></a><ul class=\"ds-nav-links\"><li><a href=\"#\">Ordinateurs</a></li><li><a href=\"#\" aria-current=\"page\">Téléphones</a></li><li><a href=\"#\">Audio</a></li><li><a href=\"#\">Écrans</a></li><li><a href=\"#\">Accessoires</a></li></ul><span class=\"ds-nav-tools\"><button type=\"button\" class=\"ds-nav-icon\" aria-label=\"Rechercher dans la boutique\"><svg viewBox=\"0 0 24 24\" width=\"17\" height=\"17\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/></svg></button><button type=\"button\" class=\"ds-nav-icon\" aria-label=\"Sac, vide\"><svg viewBox=\"0 0 24 24\" width=\"17\" height=\"17\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M16 10a4 4 0 0 1-8 0\"/><path d=\"M3.1 6h17.8\"/><path d=\"M3.4 5.5a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.7a2 2 0 0 0-.4-1.2l-2-2.7A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z\"/></svg></button></span></nav></header>",
+      "css": ".ds-nav { font-family: var(--font-sans, 'Geist', ui-sans-serif, system-ui, sans-serif); height: 44px; background: rgb(250 250 252 / 0.8); backdrop-filter: blur(24px) saturate(1.8); -webkit-backdrop-filter: blur(24px) saturate(1.8); color: var(--foreground, #1d1d1f); } .ds-nav-inner { display: flex; height: 100%; max-width: 1024px; margin: 0 auto; padding: 0 16px; align-items: center; justify-content: space-between; } .ds-nav-links { display: flex; flex: 1; justify-content: space-evenly; margin: 0; padding: 0 24px; list-style: none; } .ds-nav-links a { padding: 0 8px; font-size: 12px; color: rgb(29 29 31 / 0.8); text-decoration: none; transition: color 150ms; } .ds-nav-links a:hover, .ds-nav-links a[aria-current=\"page\"] { color: var(--foreground, #1d1d1f); } .ds-nav-tools { display: flex; } .ds-nav-icon { display: flex; width: 44px; height: 44px; align-items: center; justify-content: center; border: 0; background: none; color: rgb(29 29 31 / 0.8); cursor: pointer; transition: color 150ms; } .ds-nav-icon:hover { color: var(--foreground, #1d1d1f); } .ds-nav-icon:focus-visible, .ds-nav-links a:focus-visible { outline: 2px solid var(--ring, #0071e3); outline-offset: 2px; }"
+    },
+    {
+      "name": "Champ de recherche",
+      "kind": "input",
+      "refersTo": "search-input",
+      "description": "Recherche à la manière de la vitrine : grand champ sans contour, loupe grise, caret bleu.",
+      "html": "<form role=\"search\" class=\"ds-search\"><svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/></svg><input type=\"search\" placeholder=\"Rechercher dans la boutique\" aria-label=\"Rechercher dans la boutique\"></form>",
+      "css": ".ds-search { font-family: var(--font-sans, 'Geist', ui-sans-serif, system-ui, sans-serif); display: flex; align-items: center; gap: 12px; max-width: 680px; padding: 24px; background: var(--background, #fff); color: var(--muted-foreground, #6e6e73); } .ds-search input { flex: 1; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 24px; font-weight: 600; letter-spacing: -0.02em; color: var(--foreground, #1d1d1f); caret-color: var(--primary, #0071e3); outline: none; } .ds-search input::placeholder { color: rgb(110 110 115 / 0.7); } .ds-search:focus-within svg { color: var(--foreground, #1d1d1f); }"
+    },
+    {
+      "name": "Sac",
+      "kind": "custom",
+      "refersTo": "bag-flyout",
+      "description": "Popover du sac sous la barre : titre, lignes avec vignette, total, vidage.",
+      "html": "<div class=\"ds-bag\"><div class=\"ds-bag-head\"><h2>Ton sac</h2><span>1 article</span></div><ul class=\"ds-bag-lines\"><li><span class=\"ds-bag-thumb\"><svg viewBox=\"0 0 640 400\" width=\"44\" aria-hidden=\"true\"><ellipse cx=\"320\" cy=\"372\" rx=\"270\" ry=\"16\" fill=\"rgb(0 0 0 / 0.18)\"/><rect x=\"96\" y=\"14\" width=\"448\" height=\"300\" rx=\"18\" fill=\"#101114\"/><rect x=\"110\" y=\"28\" width=\"420\" height=\"272\" rx=\"6\" fill=\"#1b2230\"/><path d=\"M44 316 H596 L584 336 Q581 342 573 342 H67 Q59 342 56 336 Z\" fill=\"#4a4c52\"/><rect x=\"286\" y=\"316\" width=\"68\" height=\"6\" rx=\"3\" fill=\"#2a2c31\"/></svg></span><span class=\"ds-bag-name\"><b>Ardoise 14</b><small>Graphite, 1 × 1 499,00 €</small></span><span class=\"ds-bag-total\">1 499,00 €</span></li></ul><div class=\"ds-bag-sum\"><span>Total</span><strong>1 499,00 €</strong></div><div class=\"ds-bag-foot\"><button type=\"button\">Vider le sac</button><small>Le paiement n’existe pas dans ce lab.</small></div></div>",
+      "css": ".ds-bag { font-family: var(--font-sans, 'Geist', ui-sans-serif, system-ui, sans-serif); width: min(380px, calc(100vw - 24px)); padding: 24px; border-radius: 18px; background: var(--popover, #fff); color: var(--foreground, #1d1d1f); box-shadow: 0 18px 50px -12px rgb(0 0 0 / 0.28); } .ds-bag-head { display: flex; align-items: baseline; justify-content: space-between; } .ds-bag-head h2 { margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.02em; } .ds-bag-head span, .ds-bag-name small, .ds-bag-foot small { color: var(--muted-foreground, #6e6e73); } .ds-bag-head span { font-size: 14px; } .ds-bag-lines { margin: 20px 0 0; padding: 0; list-style: none; } .ds-bag-lines li { display: flex; align-items: center; gap: 12px; } .ds-bag-thumb { display: flex; width: 56px; height: 56px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 18px; background: var(--muted, #f5f5f7); } .ds-bag-name { flex: 1; min-width: 0; } .ds-bag-name b { display: block; font-size: 15px; font-weight: 500; } .ds-bag-name small { display: block; font-size: 12px; } .ds-bag-total { font-size: 14px; font-variant-numeric: tabular-nums; } .ds-bag-sum { display: flex; align-items: baseline; justify-content: space-between; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border, #d2d2d7); font-size: 15px; } .ds-bag-sum strong { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; } .ds-bag-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; } .ds-bag-foot button { border: 0; background: none; padding: 0; font: inherit; font-size: 14px; color: var(--link, #0066cc); cursor: pointer; } .ds-bag-foot button:hover { text-decoration: underline; text-underline-offset: 0.2em; } .ds-bag-foot button:focus-visible { outline: 2px solid var(--ring, #0071e3); outline-offset: 2px; } .ds-bag-foot small { font-size: 12px; text-align: right; }"
+    },
+    {
+      "name": "Zone micro-frontend",
+      "kind": "custom",
+      "refersTo": "mfe-zone-label",
+      "description": "Signature du lab : contour pointillé et étiquette qui nomment le propriétaire et le port de chaque zone.",
+      "html": "<div class=\"ds-zone\"><span class=\"ds-zone-label\">Remote catalog :3001 (CatalogPage)</span><p>Contenu servi par le remote.</p></div>",
+      "css": ".ds-zone { font-family: var(--font-sans, 'Geist', ui-sans-serif, system-ui, sans-serif); position: relative; padding: 32px 20px 20px; border-radius: 8px; outline: 2px dashed rgb(0 113 227 / 0.7); outline-offset: -4px; background: var(--muted, #f5f5f7); color: var(--foreground, #1d1d1f); } .ds-zone p { margin: 0; font-size: 14px; } .ds-zone-label { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); white-space: nowrap; padding: 0 8px; border-radius: 6px; background: var(--primary, #0071e3); color: var(--primary-foreground, #fff); font-size: 11px; font-weight: 600; line-height: 20px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "L'objet est la page",
+    "overview": "Calque est une vitrine de marque d'électronique fictive, construite dans le canon des boutiques Apple que le brief impose. Chaque produit occupe une tuile à l'échelle héroïque : son nom en très grand, une phrase d'accroche, un prix, ses pastilles de finition, deux pilules d'action, puis l'appareil lui-même, dessiné en géométrie vectorielle nette et teinté par la finition choisie, posé sur le bord bas de la tuile. On achète là où l'on regarde, sans quitter la page.\n\nLa densité est faible et la retenue est la règle : trois fonds seulement (blanc, gris brume, noir) qui alternent de tuile en tuile, une encre presque noire, un gris secondaire, et un unique bleu d'action. Une seule famille, Geist, porte tous les rôles ; la hiérarchie vient de la taille, du poids et d'un serrage négatif marqué sur les grands titres. Les surfaces sont plates ; seuls les objets blancs posés sur du gris et les couches qui flottent au-dessus de la page reçoivent une ombre douce.\n\nLe monde refuse la grille de vignettes avec un bouton d'achat sous chacune, les photos ou actifs d'Apple, et le mode sombre (la boutique est claire ; les tuiles noires lui donnent son contraste). Il porte aussi une couche propre au lab : les frontières entre micro-frontends peuvent être révélées sur la page, et chaque remote garde ses styles dans sa propre zone.",
+    "keyCharacteristics": [
+      "Un produit par tuile, à l'échelle héroïque, achetable sur place.",
+      "Fonds alternés blanc / brume / noir, séparés par des interstices de 12px plutôt que par des bordures.",
+      "Un seul bleu d'action, en pilules ; un seul accent d'état (signal) issu des données.",
+      "Geist partout, titres serrés (-0.03em à -0.035em), titres-phrases terminés par un point.",
+      "Appareils dessinés en SVG, recolorés par la finition avec une transition de 450ms.",
+      "Barre de navigation translucide de 44px ; recherche qui tombe de la barre sur une page floutée.",
+      "Styles de chaque remote cloisonnés sous `[data-mfe=\"<nom>\"]`."
+    ],
+    "rules": [
+      {
+        "name": "La règle du bleu unique",
+        "body": "Le bleu d'action est la seule couleur d'interface qui appelle un geste : pilules, focus, liens. Il n'est jamais un fond de section ni une décoration.",
+        "section": "colors"
+      },
+      {
+        "name": "La règle de l'état venu des données",
+        "body": "L'orange signal n'apparaît que lorsqu'une donnée le justifie (`isNew`, `lowStock`). Aucun autre accent chromatique n'est introduit dans l'interface ; la couleur vivante appartient aux finitions des produits.",
+        "section": "colors"
+      },
+      {
+        "name": "La règle des variantes de nuit",
+        "body": "Sur une tuile noire, le lien passe à `link-on-dark` et le signal à `signal-on-dark`, le texte à `tile-dark-foreground` / `tile-dark-muted`. La pilule primaire, elle, garde le bleu d'action.",
+        "section": "colors"
+      },
+      {
+        "name": "La règle Geist partout",
+        "body": "Une seule famille. La hiérarchie se construit avec la taille, les graisses 400 / 500 / 600 et le serrage (-0.035em à -0.01em), jamais avec une seconde police.",
+        "section": "typography"
+      },
+      {
+        "name": "La règle du titre-phrase",
+        "body": "Les titres de section sont des phrases terminées par un point, dont la seconde moitié passe en gris secondaire : « La boutique. Tout Calque, vendu en France. », « Finition. Choisis ta couleur. », « Tous les produits. 9 références. »",
+        "section": "typography"
+      },
+      {
+        "name": "La règle de l'objet-page",
+        "body": "Chaque produit mis en avant est une tuile entière, à son échelle crédible (un téléphone n'est pas dessiné aussi large qu'un portable), achetable sur place. Les cartes d'étagère sont des liens vers la fiche, sans bouton d'achat.",
+        "section": "layout"
+      },
+      {
+        "name": "La règle du remote cloisonné",
+        "body": "Tout remote embarque sa propre feuille Tailwind sans preflight ni `:root` (les globales appartiennent à l'hôte), fait `@reference` vers `@acme/ui/styles/theme.css`, et passe par un plugin PostCSS qui préfixe chaque sélecteur par `[data-mfe=\"<nom>\"]` (voir `apps/catalog/vite.config.ts`). Ses pages exposées s'enveloppent dans un `<div data-mfe=\"<nom>\">` sans classe. Ainsi ses utilitaires ne touchent jamais l'hôte et l'emportent dans sa propre zone quel que soit l'ordre de chargement.",
+        "section": "layout"
+      },
+      {
+        "name": "La règle du plat par défaut",
+        "body": "Les tuiles et les sections ne portent jamais d'ombre. Une ombre signale un objet qui flotte ; au survol, une carte passe de l'ombre carte à l'ombre flottante, rien de plus.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** donner à chaque produit mis en avant une tuile entière, l'appareil dessiné sur son bord bas, avec ses pastilles de finition et la pilule « Ajouter au sac » sur place.",
+      "**Do** alterner les fonds blanc (#ffffff), brume (#f5f5f7) et nuit (#000000) d'une section à l'autre, séparés par 12px d'interstice.",
+      "**Do** écrire les titres de section comme des phrases terminées par un point, seconde moitié en `muted-foreground`.",
+      "**Do** basculer sur `link-on-dark` et `signal-on-dark` dès qu'un lien ou un état se pose sur une tuile noire.",
+      "**Do** cloisonner les styles de tout nouveau remote sous `[data-mfe=\"<nom>\"]` par le plugin PostCSS, sans preflight ni `:root`, en `@reference` du thème partagé.",
+      "**Do** garder toute animation sous `motion-safe` ou la courbe `--ease-out-expo` ; la préférence de mouvement réduit tout à 0.01ms.",
+      "**Do** maintenir au moins 4,5:1 pour le texte blanc sur toute teinte du bleu d'action, y compris au survol."
+    ],
+    "donts": [
+      "**Don't** composer une grille de vignettes avec un bouton d'achat sous chacune.",
+      "**Don't** utiliser le bleu d'action comme fond de section ou comme décoration.",
+      "**Don't** introduire une seconde police, ni un mode sombre : la boutique est claire, les tuiles noires portent le contraste.",
+      "**Don't** poser d'ombre ou de bordure sur une tuile ; l'ombre est réservée aux objets qui flottent, et jamais en décalage dur.",
+      "**Don't** mettre de dégradé sur un fond de tuile ou de section ; les dégradés appartiennent aux dessins d'appareils.",
+      "**Don't** reproduire le nom, le logo, les produits ou les images d'Apple.",
+      "**Don't** ajouter de surtitre ou de mention décorative au-dessus d'un titre ; seuls les états issus des données (« Nouveau », stock) s'affichent en signal.",
+      "**Don't** laisser un remote livrer des utilitaires non préfixés ou réécrire les globales de l'hôte."
+    ]
+  }
+}
