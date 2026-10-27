@@ -1,15 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router';
 import { catalogPageQuery, paths } from '@acme/bff-client';
+import { countries } from '../lib/countries';
 
-export const countries = [
-  { id: 'fr', name: 'France' },
-  { id: 'be', name: 'Belgique' },
-];
+type Props = { country: string; onCountryChange: (country: string) => void; zonesShown: boolean; onToggleZones: () => void };
 
-type Props = { tenantId: string; onCountryChange: (tenantId: string) => void; zonesShown: boolean; onToggleZones: () => void };
-
-export function Footer({ tenantId, onCountryChange, zonesShown, onToggleZones }: Props) {
-  const categories = useQuery(catalogPageQuery(tenantId)).data?.categories ?? [];
+export function Footer({ country, onCountryChange, zonesShown, onToggleZones }: Props) {
+  const categories = useQuery(catalogPageQuery(country)).data?.categories ?? [];
 
   return (
     <footer className="bg-muted text-xs leading-relaxed text-muted-foreground">
@@ -23,14 +20,14 @@ export function Footer({ tenantId, onCountryChange, zonesShown, onToggleZones }:
             <h2 className="font-semibold text-foreground">Boutique</h2>
             <ul className="mt-2 space-y-1.5">
               {categories.map((category) => (
-                <li key={category.slug}><a href={paths.category(category.slug)} className="hover:text-foreground hover:underline">{category.name}</a></li>
+                <li key={category.slug}><Link to={paths.category(country, category.slug)} className="hover:text-foreground hover:underline">{category.name}</Link></li>
               ))}
             </ul>
           </div>
           <div className="sm:col-span-2">
             <h2 className="font-semibold text-foreground">Ce lab</h2>
             <p className="mt-2 max-w-[60ch]">
-              La navigation, la recherche et le sac viennent du shell (:3000). L’accueil, les catégories et les fiches produit viennent du remote catalog (:3001). Les deux appellent le BFF (:3003), qui appelle l’API (:3002).
+              La navigation, la recherche et le sac viennent du shell (:3000). L’accueil, les catégories et les fiches produit sont des routes du remote catalog (:3001), montées par le routeur du shell. Les deux appellent le BFF (:3003), qui appelle l’API (:3002).
             </p>
             <button type="button" onClick={onToggleZones} aria-pressed={zonesShown} className="mt-3 text-link hover:underline">
               {zonesShown ? 'Masquer les micro-frontends' : 'Afficher les micro-frontends sur la page'}
@@ -43,11 +40,11 @@ export function Footer({ tenantId, onCountryChange, zonesShown, onToggleZones }:
           <label className="flex items-center gap-1">
             <span className="sr-only">Pays</span>
             <select
-              value={tenantId}
+              value={country}
               onChange={(event) => onCountryChange(event.target.value)}
               className="cursor-pointer bg-transparent text-foreground/80 hover:text-foreground hover:underline"
             >
-              {countries.map((country) => <option key={country.id} value={country.id}>{country.name}</option>)}
+              {countries.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
             </select>
           </label>
         </div>

@@ -1,17 +1,17 @@
 import { Popover } from 'radix-ui';
 import { RotateCw, ShoppingBag, X } from 'lucide-react';
 import { DeviceArt } from '@acme/ui/components/device-art';
-import type { CartState } from './useCart';
+import type { BagState } from '../lib/use-bag';
 
 const plural = (count: number) => `${count} article${count > 1 ? 's' : ''}`;
 
-// The bag lives in the shell: a flyout under the nav, opened by the icon or by a successful add.
-export function BagFlyout({ state }: { state: CartState }) {
+// The bag lives in the shell: a flyout under the nav, opened by the icon or by the bag action after an add.
+export function BagFlyout({ state }: { state: BagState }) {
   const { cart, pending } = state;
   const count = cart?.itemCount ?? 0;
 
   return (
-    <Popover.Root open={state.open} onOpenChange={(open) => { state.setOpen(open); if (!open) state.resetActionError(); }}>
+    <Popover.Root open={state.open} onOpenChange={state.setOpen}>
       <Popover.Trigger
         aria-label={count ? `Sac, ${plural(count)}` : 'Sac, vide'}
         className="relative flex size-11 items-center justify-center text-foreground/80 transition-colors hover:text-foreground"
@@ -37,7 +37,7 @@ export function BagFlyout({ state }: { state: CartState }) {
 
           {state.actionError && (
             <p role="alert" className="mt-4 rounded-xl bg-[#fff2f1] p-3 text-sm text-destructive">
-              {state.actionError.message}
+              {state.actionError}
             </p>
           )}
 

@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import type { AddToBagRequest, CatalogProductView } from '@acme/contracts';
+import { Link } from 'react-router';
+import type { CatalogProductView } from '@acme/contracts';
 import { paths } from '@acme/bff-client';
 import { DeviceArt } from '@acme/ui/components/device-art';
 import { cn } from '@acme/ui/lib/utils';
+import { useCountry } from '../lib/country';
+import { useAddToBag } from '../lib/use-add-to-bag';
 import { FinishPicker } from './FinishPicker';
 
 type Props = {
   product: CatalogProductView;
   tone: 'light' | 'grey' | 'dark';
   size: 'full' | 'half';
-  adding: boolean;
-  onAddToBag: (request: AddToBagRequest) => void;
   headingLevel?: 'h1' | 'h2';
 };
 
@@ -33,7 +34,9 @@ const toneClass = {
 };
 
 // One product at hero scale: recolour it with its finishes and add it to the bag right here.
-export function HeroTile({ product, tone, size, adding, onAddToBag, headingLevel = 'h2' }: Props) {
+export function HeroTile({ product, tone, size, headingLevel = 'h2' }: Props) {
+  const country = useCountry();
+  const { adding, add } = useAddToBag(country, product.id);
   const [finishId, setFinishId] = useState(product.finishes[0]!.id);
   const finish = product.finishes.find((item) => item.id === finishId)!;
   const Heading = headingLevel;
@@ -74,13 +77,13 @@ export function HeroTile({ product, tone, size, adding, onAddToBag, headingLevel
         <button
           type="button"
           disabled={!product.available || adding}
-          onClick={() => onAddToBag({ product, finishId })}
+          onClick={() => add(finishId)}
           className="h-10 rounded-full bg-primary px-5 text-[15px] font-medium text-primary-foreground transition-colors hover:bg-[#0062c4] disabled:opacity-40"
         >
           {!product.available ? 'Épuisé' : adding ? 'Ajout…' : 'Ajouter au sac'}
         </button>
-        <a
-          href={paths.product(product.id)}
+        <Link
+          to={paths.product(country, product.id)}
           className={cn(
             'inline-flex h-10 items-center rounded-full px-5 text-[15px] font-medium shadow-[inset_0_0_0_1px_currentColor] transition-colors',
             dark ? 'text-[#2997ff] hover:bg-[#2997ff] hover:text-black' : 'text-primary hover:bg-primary hover:text-primary-foreground',
@@ -88,7 +91,7 @@ export function HeroTile({ product, tone, size, adding, onAddToBag, headingLevel
           aria-label={`En savoir plus sur ${product.name}`}
         >
           En savoir plus
-        </a>
+        </Link>
       </div>
 
       <div className={cn('mt-auto shrink-0 pt-6', artWidth[product.formFactor][full ? 0 : 1])}>

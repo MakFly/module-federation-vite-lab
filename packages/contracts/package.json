@@ -4,5 +4,13 @@
   "private": true,
   "type": "module",
   "types": "./src/index.ts",
-  "exports": { ".": { "types": "./src/index.ts" } }
+  "exports": {
+    ".": {
+      "types": "./src/index.ts"
+    }
+  },
+  "dependencies": {
+    "@tanstack/react-query": "5.105.0",
+    "react-router": "7.18.4"
+  }
 }

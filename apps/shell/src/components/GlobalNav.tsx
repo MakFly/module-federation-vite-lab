@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { Link, NavLink } from 'react-router';
 import { Dialog } from 'radix-ui';
 import { Menu, Search, X } from 'lucide-react';
 import { catalogPageQuery, paths } from '@acme/bff-client';
 import { cn } from '@acme/ui/lib/utils';
+import { useBag } from '../lib/use-bag';
 import { BagFlyout } from './BagFlyout';
 import { SearchPanel } from './SearchPanel';
-import type { CartState } from './useCart';
 
 // Two offset layers: a "calque" is a sheet of tracing paper laid over another.
 export function CalqueMark({ className }: { className?: string }) {
@@ -20,29 +21,30 @@ export function CalqueMark({ className }: { className?: string }) {
 
 const iconButton = 'flex size-11 items-center justify-center text-foreground/80 transition-colors hover:text-foreground';
 
-export function GlobalNav({ tenantId, currentCategory, cart }: { tenantId: string; currentCategory?: string; cart: CartState }) {
+export function GlobalNav({ country }: { country: string }) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const bag = useBag(country);
   // Shared cache with the catalog remote's home page: no extra request.
-  const categories = useQuery(catalogPageQuery(tenantId)).data?.categories ?? [];
+  const categories = useQuery(catalogPageQuery(country)).data?.categories ?? [];
 
   return (
     <header className="sticky top-0 z-50 h-11 bg-[rgb(250_250_252/0.8)] backdrop-blur-xl backdrop-saturate-[1.8]">
       <nav aria-label="Navigation principale" className="mx-auto flex h-full max-w-[1024px] items-center justify-between px-2 sm:px-4">
-        <a href={paths.home} aria-label="Calque, accueil" className="flex size-11 items-center justify-center text-foreground/90 hover:text-foreground">
+        <Link to={paths.home(country)} aria-label="Calque, accueil" className="flex size-11 items-center justify-center text-foreground/90 hover:text-foreground">
           <CalqueMark className="size-[18px]" />
-        </a>
+        </Link>
 
         <ul className="hidden flex-1 items-center justify-evenly px-6 md:flex">
           {categories.map((category) => (
             <li key={category.slug}>
-              <a
-                href={paths.category(category.slug)}
-                aria-current={category.slug === currentCategory ? 'page' : undefined}
-                className={cn('px-2 text-xs transition-colors hover:text-foreground', category.slug === currentCategory ? 'text-foreground' : 'text-foreground/80')}
+              {/* NavLink marks the current category (aria-current="page" + isActive). */}
+              <NavLink
+                to={paths.category(country, category.slug)}
+                className={({ isActive }) => cn('px-2 text-xs transition-colors hover:text-foreground', isActive ? 'text-foreground' : 'text-foreground/80')}
               >
                 {category.name}
-              </a>
+              </NavLink>
             </li>
           ))}
         </ul>
@@ -51,14 +53,14 @@ export function GlobalNav({ tenantId, currentCategory, cart }: { tenantId: strin
           <button type="button" aria-label="Rechercher dans la boutique" onClick={() => setSearchOpen(true)} className={iconButton}>
             <Search aria-hidden="true" className="size-[17px]" strokeWidth={1.6} />
           </button>
-          <BagFlyout state={cart} />
+          <BagFlyout state={bag} />
           <button type="button" aria-label="Menu" onClick={() => setMenuOpen(true)} className={cn(iconButton, 'md:hidden')}>
             <Menu aria-hidden="true" className="size-[18px]" strokeWidth={1.6} />
           </button>
         </div>
       </nav>
 
-      <SearchPanel tenantId={tenantId} open={searchOpen} onOpenChange={setSearchOpen} />
+      <SearchPanel country={country} open={searchOpen} onOpenChange={setSearchOpen} />
 
       {/* Mobile menu: categories in large type, Apple-style. */}
       <Dialog.Root open={menuOpen} onOpenChange={setMenuOpen}>
@@ -80,9 +82,9 @@ export function GlobalNav({ tenantId, currentCategory, cart }: { tenantId: strin
                   className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-1 motion-safe:fill-mode-both motion-safe:duration-300"
                   style={{ animationDelay: `${60 + index * 30}ms` }}
                 >
-                  <a href={paths.category(category.slug)} onClick={() => setMenuOpen(false)} className="block py-1.5 text-[28px] font-semibold tracking-[-0.02em]">
+                  <Link to={paths.category(country, category.slug)} onClick={() => setMenuOpen(false)} className="block py-1.5 text-[28px] font-semibold tracking-[-0.02em]">
                     {category.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

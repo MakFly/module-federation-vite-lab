@@ -11,4 +11,7 @@ export const sharedReact = {
   // Singleton required: the remote must read the same QueryClientContext as the shell,
   // otherwise it does not see the host's QueryClientProvider (and the cache is not shared).
   '@tanstack/react-query': { singleton: true, requiredVersion: '5.105.0' },
+  // Same reason: the remote's <Link>, useParams() and useFetcher() must read the shell's router
+  // context. Two copies would mean "useHref() may be used only in the context of a <Router>".
+  'react-router': { singleton: true, requiredVersion: '7.18.4' },
 };

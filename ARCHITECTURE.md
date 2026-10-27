@@ -4,8 +4,8 @@
  Navigateur
  ┌───────────────────────────────────────────────┐
  │ shell :3000  (host Module Federation)         │
- │  ├─ en-tête, organisation, panier (useCart)   │
- │  └─ <CatalogPage/>  ← chargé depuis :3001     │
+ │  ├─ routeur React Router, nav, recherche, sac │
+ │  └─ routes du catalog ← chargées depuis :3001 │
  └──────────────┬────────────────────────────────┘
                 │ fetch('/bff/...')  même origine, cookie httpOnly
                 ▼
@@ -21,18 +21,34 @@
 
 | Brique | Rôle | Ne fait pas |
 |---|---|---|
-| `apps/shell` | Compose la page et possède l'état transverse : routeur, navigation, recherche, sac, pays. | Ne connaît pas l'API. |
-| `apps/catalog` | Remote fédéré, deux modules exposés (`CatalogPage`, `ProductPage`) : accueil, catégories, fiche produit ; signale `onAddToBag`. | Ne connaît ni le panier ni l'API. |
+| `apps/shell` | Possède le routeur (React Router), le layout, la navigation, la recherche, le sac et son action. | Ne connaît ni l'API ni les pages du catalogue. |
+| `apps/catalog` | Remote fédéré, un module exposé (`catalog/routes`) : ses routes sous `/:country`, leurs loaders et leurs erreurs. | Ne connaît ni le panier ni l'API. |
 | `apps/bff` | Porte d'entrée unique des fronts : session, agrégation, vues prêtes à afficher. | Aucune règle métier. |
 | `apps/api` | Le métier : entités, invariants, cas d'usage. | Aucun formatage d'écran, pas de CORS (interne). |
 | `packages/contracts` | Types partagés : enveloppe HTTP, DTO API, vues BFF, props du remote. | Aucun code exécuté. |
 | `packages/bff-client` | `fetch` typé côté navigateur, lit l'enveloppe et lève `BffRequestError`. | |
 
-## Côté front : TanStack Query et pas de useEffect
+## Côté front : React Router, le remote possède ses routes
 
-- `@tanstack/react-query` est partagé en **singleton** (`federation.shared.ts`). Le remote catalog s'exécute sous le `QueryClientProvider` du shell, donc il n'y a qu'un cache pour toute la page. En autonomie, ou sous un hôte sans provider, `CatalogPage` apporte son propre client.
-- Les requêtes sont définies une seule fois dans `packages/bff-client/src/queries.ts` (`queryKeys`, `catalogPageQuery`, `cartQuery`, `createQueryClient`). Les deux fronts partagent ainsi les mêmes clés de cache.
-- Le shell modifie le panier via `useMutation` (`mutationKey: ['cart', tenant]`) et écrit la réponse du BFF dans le cache (`setQueryData`), sans refaire de GET. Le remote lit `useMutationState` sur cette clé pour afficher « Ajout… » sur le bon produit, sans rien connaître du shell.
+```
+/                      → redirige vers /fr                      (shell)
+/:country              → layout du shell, pays validé (fr | be) (shell)
+  ├─ sac               → action du sac (POST), pas de page      (shell)
+  ├─ *                 → 404                                    (shell)
+  └─ [patché au runtime depuis catalog/routes]                  (remote)
+     ├─ (index)        → HomePage
+     ├─ boutique/:slug → CategoryPage
+     └─ produit/:id    → ProductPage
+```
+
+- **React Router 7 en mode data** (`createBrowserRouter`). `react-router` est partagé en **singleton**, comme React et TanStack Query : les `<Link>`, `useParams()` et `useFetcher()` du remote lisent le contexte du routeur du shell. Avec deux copies, le remote planterait (« useHref() may be used only in the context of a <Router> »).
+- **Le remote expose ses routes, pas ses pages.** `catalog/routes` exporte `createCatalogRoutes({ queryClient })`, qui renvoie un arbre de routes. Le shell ne liste aucune page du catalogue.
+- **Découverte paresseuse.** `patchRoutesOnNavigation` (dans `apps/shell/src/router.tsx`) charge `catalog/routes` via Module Federation à la première navigation qui en a besoin, puis le greffe sous la route `country`. Si le remote est indisponible, l'import échoue, `PageError` s'affiche dans le layout (nav, recherche et sac restent utilisables), et la navigation suivante réessaie.
+- **Loaders + TanStack Query.** Chaque route du remote a un loader `queryClient.ensureQueryData(...)` : les données sont dans le cache avant le rendu, la page précédente reste affichée avec une barre de progression (`useNavigation`). Les pages lisent le cache avec `useSuspenseQuery`. Chaque page est un chunk séparé (`lazy`).
+- **Le contrat du sac est une URL.** Le remote ne reçoit plus de callback : il poste une `CartAction` sur `/:country/sac` avec un `useFetcher` (clé partagée par produit, donc « Ajout… » sur tous les boutons du même produit). L'action du shell appelle le BFF, écrit le panier dans le cache et ouvre le sac (store externe lu par `useSyncExternalStore`).
+- **Erreurs par propriétaire.** Les erreurs des loaders du catalogue (produit non vendu en Belgique, BFF en panne) restent dans le remote (`CatalogError`). Les erreurs du shell (pays inconnu, remote injoignable) sont gérées par `PageError`.
+- **Qui affiche quoi.** Chaque route de page porte un `handle: { mfe, page }`. Le bouton « Micro-frontends » lit `useMatches()` pour étiqueter la zone.
+- `@tanstack/react-query` reste partagé : une seule `QueryClient`, créée par le shell et passée au remote (loaders) et au `QueryClientProvider` (composants). Les requêtes sont définies une fois dans `packages/bff-client/src/queries.ts`, avec le schéma d'URL (`paths`).
 - Règle suivie (react.dev, « You Might Not Need an Effect ») :
 
   | Besoin | Outil | Pas |
@@ -40,20 +56,21 @@
   | Données serveur | `useQuery` / `useMutation` | `useEffect` + `fetch` + `useState` |
   | Réagir à une action (taper, changer de site) | le gestionnaire d'événement (`onChange`, `onClick`) | un effet qui observe une valeur |
   | Valeur calculée (Set des produits en cours d'ajout, pluriels…) | calcul pendant le rendu | `useState` + effet de synchronisation |
-  | État externe (l'URL du navigateur, pour le routeur du shell) | `useSyncExternalStore` | `useState` recopié puis resynchronisé |
+  | URL, navigation, mutations | React Router (loaders, actions, fetchers) | `useState` recopié puis resynchronisé |
+  | État externe hors React (sac ouvert par l'action) | `useSyncExternalStore` | un effet qui observe une valeur |
 
   Il n'y a plus aucun `useEffect` dans `apps/` ni `packages/`. Le debounce de la recherche est déclenché par la frappe (`useDebouncedCallback`), et le changement de pays (sac, erreur, page) est traité dans le `onChange` du sélecteur de pays.
 
 ## Le parcours « Ajouter au panier »
 
-1. **catalog** (remote) : choix d'une finition puis clic → `onAddToBag({ product, finishId })` → c'est le **shell** qui décide quoi en faire.
-2. **shell** `useCart.add()` → `POST /bff/cart/items?tenant=fr { productId, finishId }`.
+1. **catalog** (remote) : choix d'une finition puis clic → `fetcher.submit({ type: 'add', productId, finishId }, { method: 'post', action: '/fr/sac' })`.
+2. **shell** : l'action de la route `/:country/sac` → `POST /bff/cart/items?tenant=fr { productId, finishId }`.
 3. **BFF** `session.middleware` lit le cookie `bff_sid` → `withCart()` retrouve (ou crée) l'id de panier API de cette session.
 4. **BFF** `CatalogApiClient` → `POST /api/v1/tenants/fr/carts/:id/items`, avec le même `X-Request-Id`.
 5. **API** handler → `validate` (Zod : forme de la requête) → use case `AddItemToCart` → `Cart.addItem()` (domaine : stock, max par ligne, prix figé) → `CartRepository.save()`.
-6. Réponse `ApiEnvelope<CartDto>` → le BFF la transforme en `CartView` (prix formatés, id interne retiré) → le shell affiche.
+6. Réponse `ApiEnvelope<CartDto>` → le BFF la transforme en `CartView` (prix formatés, id interne retiré) → l'action l'écrit dans le cache et ouvre le sac.
 
-Si le domaine refuse (`INSUFFICIENT_STOCK`), l'erreur remonte sans perdre son code : `BusinessRuleViolation` → 422 côté API → relayée par le BFF → `BffRequestError` → message dans le panier.
+Si le domaine refuse (`INSUFFICIENT_STOCK`), l'erreur remonte sans perdre son code : `BusinessRuleViolation` → 422 côté API → relayée par le BFF → `BffRequestError` → l'action ouvre le sac avec le message.
 
 ## L'API en DDD
 

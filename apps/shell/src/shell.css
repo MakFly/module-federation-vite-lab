@@ -3,3 +3,9 @@
 @import 'tailwindcss/utilities.css' layer(utilities) source(none);
 @source './';
 @source '../../../packages/ui/src/components';
+
+/* Navigation progress: grows fast, then slows down while loaders run. */
+@keyframes nav-progress {
+  from { transform: scaleX(0.08); }
+  to { transform: scaleX(0.85); }
+}

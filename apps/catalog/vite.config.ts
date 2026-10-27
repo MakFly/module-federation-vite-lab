@@ -35,9 +35,9 @@ export default defineConfig({
     federation({
       name: 'catalog',
       filename: 'remoteEntry.js',
+      // One module: the route tree the remote owns (its pages are lazy chunks behind it).
       exposes: {
-        './CatalogPage': './src/CatalogPage.tsx',
-        './ProductPage': './src/ProductPage.tsx',
+        './routes': './src/routes.tsx',
       },
       shared: sharedReact,
       shareStrategy: 'loaded-first',

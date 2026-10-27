@@ -4,11 +4,14 @@ import { bff, BffRequestError } from './client.ts';
 
 export type CatalogFilters = { search?: string; category?: string };
 
-// URL scheme shared by every frontend. Remotes render plain links with these; the shell routes them.
+// URL scheme shared by every frontend. The country is the first segment, like a store's
+// regional site: it picks the catalog, the prices and the bag.
 export const paths = {
-  home: '/',
-  category: (slug: string) => `/boutique/${slug}`,
-  product: (id: string) => `/produit/${id}`,
+  home: (country: string) => `/${country}`,
+  category: (country: string, slug: string) => `/${country}/boutique/${slug}`,
+  product: (country: string, id: string) => `/${country}/produit/${id}`,
+  // The shell's bag action: remotes post a `CartAction` here with a fetcher.
+  bag: (country: string) => `/${country}/sac`,
 };
 
 // Centralized cache keys: the shell and the remote share the same cache without knowing each other.

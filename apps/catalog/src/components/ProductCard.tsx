@@ -1,13 +1,16 @@
+import { Link } from 'react-router';
 import type { CatalogProductView } from '@acme/contracts';
 import { paths } from '@acme/bff-client';
 import { DeviceArt } from '@acme/ui/components/device-art';
 import { cn } from '@acme/ui/lib/utils';
+import { useCountry } from '../lib/country';
 
 // A shelf card: the whole card is the link to the product page.
 export function ProductCard({ product, className }: { product: CatalogProductView; className?: string }) {
+  const country = useCountry();
   return (
-    <a
-      href={paths.product(product.id)}
+    <Link
+      to={paths.product(country, product.id)}
       className={cn(
         'group relative flex flex-col rounded-[18px] bg-card p-6 shadow-card transition-shadow duration-300 hover:shadow-flyout focus-visible:outline-offset-4',
         className,
@@ -34,6 +37,6 @@ export function ProductCard({ product, className }: { product: CatalogProductVie
         {!product.available && <span className="ml-2 text-muted-foreground">Épuisé</span>}
         {product.lowStock && <span className="ml-2 text-signal">Plus que quelques exemplaires</span>}
       </p>
-    </a>
+    </Link>
   );
 }

@@ -29,15 +29,15 @@ A hands-on lab to understand **micro-frontends with Module Federation**, end to 
 
 | App | Port | Role |
 | --- | --- | --- |
-| `apps/shell` | 3000 | **Host.** Owns the page: router, global nav, search, bag, country, footer. |
-| `apps/catalog` | 3001 | **Remote.** Exposes `CatalogPage` (home + category pages) and `ProductPage`. |
+| `apps/shell` | 3000 | **Host.** Owns the React Router instance, the layout, global nav, search, bag (and its action), country, footer. |
+| `apps/catalog` | 3001 | **Remote.** Exposes `catalog/routes`: its own route tree (home, category and product pages) with loaders and error boundaries. |
 | `apps/bff` | 3003 | **Backend for Frontend** (Hono). Session cookie, aggregation, screen-ready views, upstream error policy. |
 | `apps/api` | 3002 | **Domain API** (Hono, light DDD). Catalog and cart bounded contexts, business rules. |
 
 The store itself:
 
 - **Home page** with hero-scale product tiles. Finish swatches recolour the device drawing, and you can add to bag right from the tile.
-- **Category pages** (`/boutique/:slug`) and **product pages** (`/produit/:id`), each with a real URL.
+- **Country-prefixed URLs**, like a regional store: `/fr`, `/be/boutique/audio`, `/fr/produit/onde`.
 - **Apple-style search** that drops down from the nav, blurs the page behind it and shows results as you type.
 - **Bag flyout** with one line per product *and* finish. API business rules surface as-is ("Plus que 2 « Onde » en stock").
 - **Two countries** (France, Belgium), each with its own catalog, prices, stock and bag.
@@ -49,9 +49,9 @@ The store itself:
 ```mermaid
 flowchart LR
     subgraph Browser
-        Shell["shell :3000<br/>host: router, nav, search, bag"]
-        Catalog["catalog :3001<br/>remote: CatalogPage, ProductPage"]
-        Shell -- "loads at runtime<br/>(mf-manifest.json)" --> Catalog
+        Shell["shell :3000<br/>host: React Router, nav, search, bag"]
+        Catalog["catalog :3001<br/>remote: catalog/routes"]
+        Shell -- "patches its routes at runtime<br/>(mf-manifest.json)" --> Catalog
     end
     Shell -- "/bff/* (Vite proxy)<br/>httpOnly cookie" --> BFF
     Catalog -- "/bff/*" --> BFF
@@ -60,12 +60,12 @@ flowchart LR
 
 | Piece | Does | Does not |
 | --- | --- | --- |
-| `apps/shell` | Composes the page and owns cross-cutting state. | Know the API. |
-| `apps/catalog` | Renders products, emits `onAddToBag`. | Know the URL, the bag or the API. |
+| `apps/shell` | Owns the router, the layout and cross-cutting state. | Know the API or the catalog's pages. |
+| `apps/catalog` | Owns its routes, their data and their errors. Posts to the bag action. | Know the bag or the API. |
 | `apps/bff` | Single entry point for frontends: session, aggregation, formatting. | Hold business rules. |
 | `apps/api` | Entities, invariants, use cases. | Format anything for a screen. |
-| `packages/contracts` | Shared types: HTTP envelope, API DTOs, BFF views, remote props. | Run any code. |
-| `packages/bff-client` | Typed `fetch`, TanStack Query keys and `queryOptions` factories. | |
+| `packages/contracts` | Shared types: HTTP envelope, API DTOs, BFF views, `CreateCatalogRoutes`, `MfeHandle`. | Run any code. |
+| `packages/bff-client` | Typed `fetch`, TanStack Query keys and `queryOptions` factories, the URL scheme (`paths`). | |
 | `packages/ui` | Design tokens, shadcn/ui sources, `DeviceArt`, shared hooks. | Get federated (it is a regular build-time dependency). |
 
 ## Getting started
@@ -81,8 +81,8 @@ bun run dev
 
 | URL | What |
 | --- | --- |
-| http://localhost:3000 | The store (shell + federated catalog) |
-| http://localhost:3001 | The catalog remote running standalone |
+| http://localhost:3000 | The store (shell + federated catalog), redirects to `/fr` |
+| http://localhost:3001 | The catalog remote running standalone, under a minimal test host |
 | http://localhost:3001/mf-manifest.json | The remote's federation manifest |
 | http://localhost:3003 | BFF |
 | http://localhost:3002 | API |
@@ -105,30 +105,59 @@ The remote URL used by the shell is read at build time from `CATALOG_REMOTE_URL`
 
 ## How the federation works
 
-The catalog **exposes** two modules; the shell **consumes** them lazily:
+The catalog **exposes its routes**, not its components. The shell runs **React Router 7** (data mode) and mounts them at runtime:
 
 ```ts
 // apps/catalog/vite.config.ts
-exposes: {
-  './CatalogPage': './src/CatalogPage.tsx',
-  './ProductPage': './src/ProductPage.tsx',
-},
+exposes: { './routes': './src/routes.tsx' },
 ```
 
 ```tsx
-// apps/shell/src/App.tsx
-const CatalogPage = lazy(() => import('catalog/CatalogPage'));
-const ProductPage = lazy(() => import('catalog/ProductPage'));
+// apps/catalog/src/routes.tsx: the remote owns its URLs, data and errors
+export const createCatalogRoutes: CreateCatalogRoutes = ({ queryClient }) => [{
+  id: 'catalog', Component: CatalogLayout, ErrorBoundary: CatalogError,
+  children: [
+    { index: true, loader: ..., lazy: () => import('./pages/HomePage') },
+    { path: 'boutique/:slug', loader: ..., lazy: () => import('./pages/CategoryPage') },
+    { path: 'produit/:id', loader: ..., lazy: () => import('./pages/ProductPage') },
+  ],
+}];
+```
+
+```tsx
+// apps/shell/src/router.tsx: lazy route discovery
+createBrowserRouter(shellRoutes, {
+  async patchRoutesOnNavigation({ patch }) {
+    if (catalogMounted) return;
+    const { createCatalogRoutes } = await import('catalog/routes');
+    patch('country', createCatalogRoutes({ queryClient }));
+    catalogMounted = true;
+  },
+});
+```
+
+The route tree, and who owns each part:
+
+```text
+/                      → redirect to /fr                          shell
+/:country              → layout, country validated (fr | be)      shell
+  ├─ sac               → bag action (POST only)                   shell
+  ├─ *                 → 404                                      shell
+  └─ patched at runtime from catalog/routes                       catalog
+     ├─ (index)        → HomePage
+     ├─ boutique/:slug → CategoryPage
+     └─ produit/:id    → ProductPage
 ```
 
 Key points:
 
-- **Shared singletons.** `react`, `react-dom` and `@tanstack/react-query` are shared as singletons ([`federation.shared.ts`](federation.shared.ts)). The remote runs under the shell's `QueryClientProvider`, so **the whole page has one query cache**.
-- **Contract, not coupling.** The remote receives `tenantId`, the route params and an `onAddToBag` callback (types in `packages/contracts`). It never imports shell code.
-- **Shared cache, not shared state.** The shell mutates the bag with `useMutation`. The remote reads that same mutation through `useMutationState` to show "Ajout…" on the right product, without knowing anything about the shell.
-- **Routing stays in the host.** The shell's router (built on `useSyncExternalStore`) intercepts clicks on plain `<a href>` links, including those rendered by the remote.
-- **Failure isolation.** Each remote is wrapped in an error boundary. If the catalog is down, the shell (nav, search, bag) keeps working.
-- **Standalone mode.** The remote brings its own `QueryClient` when it runs alone on :3001.
+- **Shared singletons.** `react`, `react-dom`, `@tanstack/react-query` and `react-router` are shared as singletons ([`federation.shared.ts`](federation.shared.ts)). The remote's `<Link>`, `useParams()` and `useFetcher()` read the shell's router context, and its queries hit the shell's cache. With two copies of `react-router`, the remote would crash with "useHref() may be used only in the context of a `<Router>`".
+- **The shell never lists the catalog's pages.** `patchRoutesOnNavigation` fetches `catalog/routes` the first time a navigation needs it and grafts the tree under `/:country`.
+- **Loaders, then render.** Remote loaders call `queryClient.ensureQueryData(...)`: data is cached before the page renders, the previous page stays on screen with a progress bar (`useNavigation`), and pages read the cache with `useSuspenseQuery`. Each page is its own lazy chunk.
+- **The bag contract is a URL.** The remote does not get a callback. It posts a `CartAction` to `/:country/sac` with a keyed `useFetcher`, and reads the pending state from it ("Ajout…" on every button for that product). The shell's action calls the BFF, writes the cart into the cache and opens the bag.
+- **Errors stay with their owner.** Catalog loader errors (product not sold in Belgium, BFF down) render in the remote's `CatalogError`. If the remote itself can't be loaded, the shell's `PageError` renders inside the layout: nav, search and bag keep working.
+- **Ownership is visible.** Page routes carry `handle: { mfe, page }`. The "Micro-frontends" toggle reads `useMatches()` to label the zone.
+- **Standalone mode.** On :3001 the remote runs its routes under a minimal test host that provides the contract: a `:country` route and a bag action that logs submissions.
 
 ## The backend: BFF and API
 
@@ -187,7 +216,8 @@ The architecture is built for the strangler fig pattern:
   | Server data | `useQuery` / `useMutation` | `useEffect` + `fetch` + `useState` |
   | React to a user action | The event handler | An effect watching a value |
   | Derived values | Compute during render | `useState` + a sync effect |
-  | External state (the URL) | `useSyncExternalStore` | Copied state, resynced |
+  | URL, navigation, mutations | React Router loaders, actions, fetchers | Copied state, resynced |
+  | State written outside React (bag opened by the action) | `useSyncExternalStore` | An effect watching a value |
 
   `eslint-plugin-react-hooks` (recommended rules, including `set-state-in-effect`) is on. A `no-restricted-syntax` rule flags any `useEffect` or `useLayoutEffect` import.
 
@@ -201,7 +231,8 @@ The architecture is built for the strangler fig pattern:
 Other things worth knowing:
 
 - An error boundary is **not a sandbox**: remote JavaScript runs in the host's page.
-- Resetting an error boundary does not retry a rejected `React.lazy` import, so the recovery button reloads the page.
+- A failed remote entry is not retried by the federation runtime, so the recovery button reloads the page.
+- Every shared library that holds React context (`react-router`, `@tanstack/react-query`) must be a singleton, or the remote silently gets its own empty context.
 - Shared singletons must agree on versions: the React version is a contract between deployments.
 
 ## Project layout
@@ -209,8 +240,8 @@ Other things worth knowing:
 ```text
 .
 ├─ apps/
-│  ├─ shell/        host: router.ts, GlobalNav, SearchPanel, BagFlyout, useCart
-│  ├─ catalog/      remote: CatalogPage, ProductPage, HeroTile, FinishPicker
+│  ├─ shell/        host: router.tsx, routes/ (layout, bag action, errors), components/, lib/
+│  ├─ catalog/      remote: routes.tsx, CatalogLayout, pages/, components/, lib/
 │  ├─ bff/          Hono BFF: clients/, handlers/, http/errors.ts
 │  └─ api/          Hono API: shared/, modules/catalog, modules/cart
 ├─ packages/
@@ -229,6 +260,7 @@ Other things worth knowing:
 | Vite | 8.3.5 |
 | `@module-federation/vite` | 1.23.6 |
 | React / React DOM | 19.3.1 |
+| React Router | 7.18.4 (data mode) |
 | TanStack Query | 5.105.0 |
 | Tailwind CSS | 4.3.3 |
 | Radix UI / shadcn/ui | 1.8.1 / New York, Tailwind v4 |
@@ -248,6 +280,7 @@ The in-depth docs are written in French:
 Official docs:
 
 - [Module Federation for Vite](https://github.com/module-federation/vite) and the [Vite integration guide](https://module-federation.io/integrations/build-tool/vite.html)
+- [React Router: lazy route discovery](https://reactrouter.com/how-to/lazy-route-discovery) (`patchRoutesOnNavigation`)
 - [TanStack Query](https://tanstack.com/query/latest)
 - [Hono](https://hono.dev)
 - [React: You Might Not Need an Effect](https://react.dev/learn/you-might-not-need-an-effect)

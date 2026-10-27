@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { Link, useNavigate } from 'react-router';
 import { Dialog } from 'radix-ui';
 import { ArrowRight, Search, X } from 'lucide-react';
 import type { CatalogProductView } from '@acme/contracts';
 import { catalogPageQuery, paths } from '@acme/bff-client';
 import { DeviceArt } from '@acme/ui/components/device-art';
 import { useDebouncedCallback } from '@acme/ui/lib/use-debounced-callback';
-import { navigate } from './router';
 
-type Props = { tenantId: string; open: boolean; onOpenChange: (open: boolean) => void };
+type Props = { country: string; open: boolean; onOpenChange: (open: boolean) => void };
 
 function Highlight({ text, term }: { text: string; term: string }) {
   const index = term ? text.toLocaleLowerCase('fr').indexOf(term.toLocaleLowerCase('fr')) : -1;
@@ -17,13 +17,14 @@ function Highlight({ text, term }: { text: string; term: string }) {
 }
 
 // Apple-style search: the panel drops from the nav, the page blurs behind it, results arrive as you type.
-export function SearchPanel({ tenantId, open, onOpenChange }: Props) {
+export function SearchPanel({ country, open, onOpenChange }: Props) {
+  const navigate = useNavigate();
   const [input, setInput] = useState('');
   const [term, setTerm] = useState('');
   const debounced = useDebouncedCallback(setTerm, 200);
 
-  const catalog = useQuery(catalogPageQuery(tenantId));
-  const results = useQuery({ ...catalogPageQuery(tenantId, { search: term }), enabled: term.length > 0 });
+  const catalog = useQuery(catalogPageQuery(country));
+  const results = useQuery({ ...catalogPageQuery(country, { search: term }), enabled: term.length > 0 });
   const products: CatalogProductView[] = term ? results.data?.products ?? [] : [];
 
   const close = () => onOpenChange(false);
@@ -51,7 +52,7 @@ export function SearchPanel({ tenantId, open, onOpenChange }: Props) {
               onSubmit={(event) => {
                 event.preventDefault();
                 const first = products[0];
-                if (first) { close(); navigate(paths.product(first.id)); }
+                if (first) { close(); void navigate(paths.product(country, first.id)); }
               }}
             >
               <Search aria-hidden="true" className="size-6 shrink-0 text-muted-foreground" />
@@ -78,10 +79,10 @@ export function SearchPanel({ tenantId, open, onOpenChange }: Props) {
                   <ul className="mt-3 space-y-1">
                     {(catalog.data?.categories ?? []).map((category) => (
                       <li key={category.slug}>
-                        <a href={paths.category(category.slug)} onClick={close} className="group flex items-center gap-3 rounded-md py-1.5 text-sm font-semibold">
+                        <Link to={paths.category(country, category.slug)} onClick={close} className="group flex items-center gap-3 rounded-md py-1.5 text-sm font-semibold">
                           <ArrowRight aria-hidden="true" className="size-3.5 text-muted-foreground group-hover:text-foreground" />
                           {category.name}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -92,7 +93,7 @@ export function SearchPanel({ tenantId, open, onOpenChange }: Props) {
                   <ul className="mt-3 divide-y">
                     {products.map((product) => (
                       <li key={product.id}>
-                        <a href={paths.product(product.id)} onClick={close} className="flex items-center gap-4 rounded-md py-3 hover:bg-muted/60 sm:-mx-3 sm:px-3">
+                        <Link to={paths.product(country, product.id)} onClick={close} className="flex items-center gap-4 rounded-md py-3 hover:bg-muted/60 sm:-mx-3 sm:px-3">
                           <span className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-muted p-1.5">
                             <DeviceArt formFactor={product.formFactor} finish={product.finishes[0]!.hex} />
                           </span>
@@ -101,7 +102,7 @@ export function SearchPanel({ tenantId, open, onOpenChange }: Props) {
                             <span className="block text-xs text-muted-foreground">{product.category.name}</span>
                           </span>
                           <span className="text-sm text-muted-foreground">{product.price.formatted}</span>
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
